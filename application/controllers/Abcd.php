@@ -39,10 +39,13 @@
     echo "this is test page";
   }
 
-  function dipro()
+  function getInfo()
   {
-    $this->load->helper('url');
-    $this->load->view('front/index');
+    $curl = curl_init();
+    curl_setopt($curl,CURLOPT_URL,'https://www.amazon.in/');
+    curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,false);
+    curl_exec($curl);
+    curl_close($curl);
   }
 
 }
