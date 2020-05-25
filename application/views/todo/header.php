@@ -32,17 +32,19 @@
     <!-- /Fonts -->
    <link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <!-- //Fonts -->
 </head>
 
-<body>
+<body  style="background-color:#26262D;">
 <header>
 	<div class="container">
 		<div class="header d-lg-flex justify-content-between align-items-center">
 			<div class="header-agile">
 				<h1>
 					<a class="navbar-brand logo" href="<?php echo base_url(); ?>" style="color:#ff3a3a;">
-					 <img src="<?php echo base_url(); ?>front_static/images/logo.png" alt="" style="height:50px;"><img src="<?php echo base_url(); ?>front_static/images/logo1.png" alt="" style="width:170px;">
+                    <h1><span style="color:red;">To</span><span style="color:white;">-</span><span style="color:yellow;">Do</span></h1>
+					 <!-- <img src="<?php echo base_url(); ?>front_static/images/logo.png" alt="" style="height:50px;"><img src="<?php echo base_url(); ?>front_static/images/logo1.png" alt="" style="width:170px;"> -->
 					</a>
 				</h1>
 			</div>

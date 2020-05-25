@@ -5,7 +5,7 @@
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://localhost/todo/api/example/todo",
+            CURLOPT_URL => base_url()."api/todo",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -40,7 +40,7 @@
             $postData = rtrim($postData, "&");
 
             curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://localhost/todo/api/example/todo",
+            CURLOPT_URL => base_url()."api/example/todo",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

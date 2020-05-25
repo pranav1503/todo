@@ -114,7 +114,7 @@
             </div>
         </footer>
         <script src="<?php echo base_url(); ?>front_static/js/bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>front_static/js/jquery.js"></script>
+        <!-- <script src="<?php echo base_url(); ?>front_static/js/jquery.js"></script> -->
         <!-- //footer -->
     </body>
 </html>
