@@ -72,6 +72,9 @@ class Todo extends REST_Controller{
             "task" => $this->put('task'),
             "due" => $this->put('due'),            
         );
+        if($data["due"] == "" || ctype_space($data["due"]) || empty($data["due"])){
+            $data["due"] = null;
+        }
         if($data["task"] == "" || ctype_space($data["task"])){
             $this->response(array(
                 'status' => false,                           
