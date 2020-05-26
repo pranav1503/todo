@@ -8,6 +8,14 @@
     // if ($this->session->flashdata("password")) {
     //   echo "<script>alert('Password Changed Successfully. Please login to Continue');</script>";
     // }
+$user = $this->session->all_userdata();
+if($user['id']==""){
+    redirect(base_url()."login/login");
+}
+else{
+    echo "<p class='text-success'>".$user['id']."</p>";
+}
+
  ?>
 <!DOCTYPE html>
 <html lang="zxx">

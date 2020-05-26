@@ -6,6 +6,8 @@
 
             curl_setopt_array($curl, array(
             CURLOPT_URL => base_url()."api/todo",
+            //CURLOPT_URL => "http://localhost/todo/todo/api/example/todo",
+
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -41,6 +43,7 @@
 
             curl_setopt_array($curl, array(
             CURLOPT_URL => base_url()."api/example/todo",
+           // CURLOPT_URL => "http://localhost/todo/todo/api/example/todo",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
