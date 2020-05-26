@@ -93,7 +93,7 @@
         		<li class="breadcrumb-item">
         			<a href="<?php echo base_url(); ?>">Home</a>
         		</li>
-        		<li class="breadcrumb-item active" aria-current="page">Login</li>
+        		<li class="breadcrumb-item active" aria-current="page">Todo</li>
         	</ol>
         </div>
         <!-- //page details -->
@@ -102,6 +102,34 @@
             <div class="container py-md-5">
                 <div class="row">
                     <div class="col-md-5" style="background-color:#31313A;">
+                        <h3 style="color:white; margin-top:25px;" align="center">Add New To-Do</h3>
+                        <div class="row" style="margin-top:15px;">
+                            <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="add_task">Task</label>                                    
+                                        <input class="form-control" type="text" name="task" id="add_task" placeholder="Enter Task">
+                                    </div>
+                            </div>
+                            <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="add_due">Due Date</label>
+                                        <input class="form-control" type="date" id="add_due"  placeholder="Enter Date" >
+                                    </div>
+                            </div>
+                            <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="password">Label</label>                                        
+                                        <select name="" id="add_label" class="form-control">
+                                          <?php foreach($labels as $values){?>
+                                            <option value="<?php echo $values["label"];?>"><?php echo ucwords($values["label"]);?></option>
+                                          <?php }?>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <button class="btn btn-lg btn-block btn-danger">Add To-Do</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-7" style="background-color:#31313A;border-left:1px solid white;">
                         <div class="container" style="margin-top:50px;">
@@ -198,10 +226,13 @@
                                     <label for="userid">Task</label>                                    
                                     <input class="form-control" type="text" name="task" id="task" placeholder="Enter Task">
                                 </div>
+                            </div>
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="password">Due Date</label>
                                     <input class="form-control" type="date" id="due"  placeholder="Enter Date" >
                                 </div>
+                            </div>
                             </div>            
                         </div>
                         </div>
@@ -231,11 +262,17 @@
                                 },
                                 success : function(data){
                                     data = JSON.parse(data);
+                                    var due ;
+                                    if($("#due").val() == ""){
+                                        due = null;
+                                    }else{
+                                        due = $("#due").val();
+                                    }
                                     if(data.status){
                                         for(var i=0;i<tasks.length;i++){
                                             if(tasks[i].id == id){
                                                 tasks[i].task = $("#task").val();
-                                                tasks[i].due = $("#due").val();
+                                                tasks[i].due = due;
                                                 view_tasks();
                                                 $('.modal').modal('toggle');
                                                 break;
