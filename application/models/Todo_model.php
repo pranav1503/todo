@@ -39,5 +39,15 @@
             ));
             return ($this->db->affected_rows() > 0);
         }
+
+        public function fetch_label($user="")
+        {
+            if($user == 0 || empty($user)){
+                $query = $this->db->get('labels');
+            }else{
+                $query = $this->db->get_where('labels',array('userid' => $user));
+            }
+            return $query->result_array();
+        }
     }
 ?>
