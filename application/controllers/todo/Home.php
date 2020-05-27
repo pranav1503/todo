@@ -2,7 +2,9 @@
     class Home extends CI_Controller{
         public function index()
         {
-            $user = 100;
+            // $user = 100;
+            $users = $this->session->all_userdata();
+            $user = $users['id'];
             $curl = curl_init();
             curl_setopt_array($curl, array(
             CURLOPT_URL => base_url()."api/todo/task/".$user,

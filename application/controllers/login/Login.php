@@ -21,7 +21,7 @@
             $postData = rtrim($postData, "&");
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => "http://localhost/todo/todo/api/login/login",
+              CURLOPT_URL => base_url()."api/login/login",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,

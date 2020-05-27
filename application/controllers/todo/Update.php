@@ -1,7 +1,7 @@
 <?php
     class Update extends CI_Controller{
         public function index()
-        {
+        {            
             $id = $this->input->post('id');
             $userid = $this->input->post('userid');
             $task = $this->input->post('task');

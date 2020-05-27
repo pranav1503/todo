@@ -27,17 +27,29 @@ class Todo extends REST_Controller{
     {
         $user = $this->input->post('user');
         $date = $this->input->post('due');
-        $task = $this->input->post('task');
-        if ($date == ""){
+        $task = $this->input->post('task'); 
+        $label = $this->input->post('label');        
+        if($date == "" || ctype_space($date)){
             $date = null;
         }
-        $insert = $this->todo_model->add_todo($user,$date,$task);   
-        $this->response([            
-            'user' => intval($user),
-            'due_date' => $date, 
-            'task' => $task,
-            'message' => 'Added Successfully.',
-        ],REST_Controller::HTTP_OK);     
+
+        if($task == "" || ctype_space($task)){
+            $this->response([  
+                'status' => false,           
+                'message' => 'Enter Appropriate Task',
+            ],REST_Controller::HTTP_BAD_REQUEST);     
+        }else{
+            $id = $this->todo_model->add_todo($user,$date,$task,$label);   
+            $this->response([   
+                'status' => true,      
+                'id' => intval($id),   
+                'user' => intval($user),
+                'due_date' => $date, 
+                'task' => $task,
+                'label' => $label,
+                'message' => 'Successfully Added.',
+            ],REST_Controller::HTTP_OK);     
+        }
     }
 
     public function task_delete($user,$id)

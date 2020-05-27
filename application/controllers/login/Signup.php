@@ -35,7 +35,7 @@
                 $postData = rtrim($postData, "&");
 
                 curl_setopt_array($curl, array(
-                  CURLOPT_URL => "http://localhost/todo/todo/api/signup/signup",
+                  CURLOPT_URL => base_url()."api/signup/signup",
                   CURLOPT_RETURNTRANSFER => true,
                   CURLOPT_ENCODING => "",
                   CURLOPT_MAXREDIRS => 10,

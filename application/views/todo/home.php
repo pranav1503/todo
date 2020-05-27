@@ -12,9 +12,7 @@ $user = $this->session->all_userdata();
 if($user['id']==""){
     redirect(base_url()."login/login");
 }
-else{
-    echo "<p class='text-success'>".$user['id']."</p>";
-}
+
 
  ?>
 <!DOCTYPE html>
@@ -126,7 +124,7 @@ else{
                             </div>
                             <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="password">Label</label>                                        
+                                        <label for="add_label">Label</label>                                        
                                         <select name="" id="add_label" class="form-control">
                                           <?php foreach($labels as $values){?>
                                             <option value="<?php echo $values["label"];?>"><?php echo ucwords($values["label"]);?></option>
@@ -135,10 +133,42 @@ else{
                                     </div>
                             </div>
                             <div class="col-lg-12">
-                                <button class="btn btn-lg btn-block btn-danger">Add To-Do</button>
+                                <button class="btn btn-lg btn-block btn-danger" id="add_btn">Add To-Do</button>
                             </div>
                         </div>
                     </div>
+                    <script>
+                        let tasks = [<?php echo json_encode($tasks);?>][0];
+                        console.log(tasks);
+                        $("#add_btn").click(function(){                       
+                            $.ajax({
+                                url: '<?php echo base_url();?>todo/add',
+                                type: "POST",
+                                data : {
+                                    'task' : $("#add_task").val(),
+                                    'due' : $("#add_due").val(),
+                                    'label' : $("#add_label").val(),
+                                },
+                                success: function(data){
+                                    data = JSON.parse(data);                                    
+                                    var new_data  = {
+                                        id : data.id,
+                                        userid : data.user,
+                                        task: data.task,
+                                        due: data.due_date,
+                                        label: data.label,
+                                    }                     
+                                    tasks.push(new_data);  
+                                    alert(data.message);
+                                    view_tasks();       
+                                },
+                                error: function(data){
+                                    alert("Server Busy.")
+                                    console.log(data);
+                                }
+                            });
+                        });
+                    </script>
                     <div class="col-md-7" style="background-color:#31313A;border-left:1px solid white;">
                         <div class="container" style="margin-top:50px;">
 
@@ -146,8 +176,7 @@ else{
                                 <div class="col-lg-12" style="margin-top:5px;height:500px;overflow-y:scroll;">                                                                           
                                     <div id="task-body">
                                     </div>
-                                    <script>
-                                        let tasks = [<?php echo json_encode($tasks);?>][0];
+                                    <script>                                        
                                         function view_tasks(){
                                             let string = "";
                                             tasks.forEach(element => {                                                
@@ -180,7 +209,7 @@ else{
 
                                         function delete_task(userid,id){
                                             // alert(userid+" and " +id);
-                                            let result = confirm("Sure you want to delete the task?")
+                                            let result = confirm("Sure you want to delete the task?")                                            
                                             if(result){                                            
                                                 $.ajax({
                                                     url: '<?php echo base_url();?>todo/delete',
@@ -214,51 +243,46 @@ else{
                         </div>
                     </div>
                 </div>
-
-                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      Launch demo modal
-                </button> -->                
-                <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" style="background-color:#26262D">
-                        <div class="modal-content" style="background-color:#26262D">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Edit Task</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="userid">Task</label>                                    
-                                    <input class="form-control" type="text" name="task" id="task" placeholder="Enter Task">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="password">Due Date</label>
-                                    <input class="form-control" type="date" id="due"  placeholder="Enter Date" >
-                                </div>
-                            </div>
-                            </div>            
-                        </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="button" id="update_btn" class="btn btn-success">Save changes</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>   
-                <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
-                <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
-                <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>                           -->
-                <script>
-                    function edit_fun(userid,id,task,due){                                                                     
+                
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#26262D">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Edit Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="task">Task</label>                                    
+                <input class="form-control" type="text" name="task" id="task" placeholder="Enter Task">
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="password">Due Date</label>
+                <input class="form-control" type="date" id="due"  placeholder="Enter Date" >
+            </div>
+        </div>
+        </div>            
+        </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="update_btn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                <script>                
+                    function edit_fun(userid,id,task,due){                                                                                             
                         $("#task").val(task);
                         $("#due").val(due);
-                        $("#update_btn").click(function(){
+                        $("#update_btn").click(function(){                            
                             $.ajax({
                                 url : "<?php echo base_url();?>todo/update",
                                 type : "POST",
@@ -268,8 +292,8 @@ else{
                                     "task" : $("#task").val(),
                                     "due" : $("#due").val(), 
                                 },
-                                success : function(data){
-                                    data = JSON.parse(data);
+                                success : function(data){                                                                     
+                                    data = JSON.parse(data);                                    
                                     var due ;
                                     if($("#due").val() == ""){
                                         due = null;
@@ -294,36 +318,10 @@ else{
                             });
                         });
                         $('.modal').modal('toggle');
-                    }
-                </script>                        
-                               
-                <!-- <div class="contact-w3pvt-form mt-5">
-                    <form class="w3layouts-contact-fm" method="post" action="<?php echo base_url(); ?>separator/login_validation">
-                      <p style="color:red;"><?php echo $this->session->flashdata("login_msg") . "<br>". $this->session->userdata("userid"); ?></p>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="userid">User Id</label>
-                                    <?php echo form_error("userid"); ?>
-                                    <input class="form-control" type="number" name="userid" id="userid" placeholder="Enter User Id">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <?php echo form_error("password"); ?>
-                                    <input class="form-control" type="password" name="password" pattern="^[a-zA-Z0-9,_.%/\#!@%*() ]*$" id="password" placeholder="Enter Password" >
-                                </div>
+                    }                
 
-                            </div>
-                             <div class="form-group mx-auto mt-3">
-                                <button class="btn submit" style="background-color:red;">Login</button>
-                            </div>
-                             <div class="form-group mx-auto mt-3">
-                                <a href="<?php echo base_url(); ?>home/forgot" >Forgot Password?</a>
-                            </div>
-
-                        </div>
-                    </form>
-                </div> -->
+                    
+                </script>                                       
             </div>
         </section>
         <!-- //banner-botttom -->
