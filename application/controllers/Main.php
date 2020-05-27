@@ -2,7 +2,7 @@
     class Main extends CI_Controller{
         function index()
         {   
-            $this->load->view("todo/login");
+            $this->load->view("login/login");
         }
     }
 ?>
