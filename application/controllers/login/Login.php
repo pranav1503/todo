@@ -1,8 +1,8 @@
 <?php
     class Login extends CI_Controller{
 
-        public function index()
-        {
+        public function index()        
+        {            
             $data["success"]='';
             $this->load->view('login/login',$data);
         }

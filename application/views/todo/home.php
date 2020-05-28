@@ -128,29 +128,51 @@ else{
                             <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="add_label">Label</label>                                        
-                                        <select name="" id="add_label" class="form-control">
-                                          <?php foreach($labels as $values){?>
+                                        <select name="" id="add_label" class="form-control" onchange="labelFun()">
+                                            <option value="personal">Personal</option>
+                                            <option value="work">Work</option>
+                                            <option value="shopping">Shopping</option>
+                                            <option value="others">Others</option>
+                                          <!-- <?php foreach($labels as $values){?>
                                             <option value="<?php echo $values["label"];?>"><?php echo ucwords($values["label"]);?></option>
-                                          <?php }?>
+                                          <?php }?> -->
                                         </select>
                                     </div>
-                            </div>
+                            </div>                            
+                            <div class="col-lg-12" id="add_others_div" style="display:none;">
+                                    <div class="form-group">
+                                        <label for="add_others">Others</label>
+                                        <input class="form-control" type="text" id="add_others"  placeholder="Enter Label" >
+                                    </div>
+                                    <script>
+                                        function labelFun(){                                            
+                                            if($("#add_label").val() == "others"){                                                
+                                                $("#add_others_div").show();
+                                            }else{
+                                                $("#add_others_div").hide();
+                                            }
+                                        }
+                                    </script>
+                            </div>                                                                        
                             <div class="col-lg-12">
                                 <button class="btn btn-lg btn-block btn-danger" id="add_btn">Add To-Do</button>
                             </div>
                         </div>
                     </div>
                     <script>
-                        let tasks = [<?php echo json_encode($tasks);?>][0];
-                        console.log(tasks);
+                        let tasks = [<?php echo json_encode($tasks);?>][0];                        
                         $("#add_btn").click(function(){    
+                            var lab = $("#add_label").val();
+                            if(lab == "others"){
+                                lab = $("#add_others").val()
+                            }
                             $.ajax({
                                 url: '<?php echo base_url();?>todo/add',
                                 type: "POST",
                                 data : {
                                     'task' : $("#add_task").val(),
                                     'due' : $("#add_due").val(),
-                                    'label' : $("#add_label").val(),
+                                    'label' : lab,
                                 },
                                 success: function(data){
                                     data = JSON.parse(data);
@@ -176,7 +198,7 @@ else{
                         <div class="container" style="margin-top:50px;">
 
                             <div class="row task-view">
-                                <div class="col-lg-12" style="margin-top:5px;height:500px;overflow-y:scroll;">                                                                           
+                                <div class="col-lg-12" style="margin-top:5px;height:500px;overflow-y:scroll;border-top:1px solid grey;">                                                                           
                                     <div id="task-body">
                                     </div>
                                     <script>                                        
@@ -195,9 +217,9 @@ else{
                                             <div class="row" style="margin-top:0;border-left:3px solid purple;padding-bottom:10px;">                                        
                                                     <div class="col-10" style="display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">`;                                                
                                                     if(element.due == null){
-                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">No Due Specified</p>`;
+                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">No Due Specified (`+element.label.toUpperCase()+`)</p>`;
                                                     }else{
-                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">Due On: `+element.due+`</p>`;
+                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">Due On: `+element.due+` (`+element.label.toUpperCase()+`)</p>`;
                                                     }                                                    
                                                 string +=   `</div>           
                                                     <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
