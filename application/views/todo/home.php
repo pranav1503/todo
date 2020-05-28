@@ -12,6 +12,9 @@ $user = $this->session->all_userdata();
 if($user['id']==""){
     redirect(base_url()."login/login");
 }
+else{
+    $_SESSION['view'] = 1;
+}
 
 
  ?>
@@ -140,7 +143,7 @@ if($user['id']==""){
                     <script>
                         let tasks = [<?php echo json_encode($tasks);?>][0];
                         console.log(tasks);
-                        $("#add_btn").click(function(){                       
+                        $("#add_btn").click(function(){    
                             $.ajax({
                                 url: '<?php echo base_url();?>todo/add',
                                 type: "POST",
@@ -150,7 +153,7 @@ if($user['id']==""){
                                     'label' : $("#add_label").val(),
                                 },
                                 success: function(data){
-                                    data = JSON.parse(data);                                    
+                                    data = JSON.parse(data);
                                     var new_data  = {
                                         id : data.id,
                                         userid : data.user,
