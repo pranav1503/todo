@@ -3,7 +3,8 @@
 
         public function index()
         {
-            $this->load->view('login/login');
+            $data["success"]='';
+            $this->load->view('login/login',$data);
         }
         
         public function form_val()
@@ -43,12 +44,22 @@
             curl_close($curl);
             $response=json_decode($response,true);
             //print_r($response);
-            $this->load->library('session');
-            $session_data = array(
-                "id" => $response['id'],
-            );
-            $this->session->set_userdata($session_data);
-            redirect(base_url()."todo/home");
+            if($response['status']==1){
+                $this->load->library('session');
+                $session_data = array(
+                    "id" => $response['id'],
+                );
+                $this->session->set_userdata($session_data);
+                redirect(base_url()."todo/home");    
+            }
+            else if($response['status']==0){
+                $this->session->set_flashdata("login_msg","Please Enter Correct Email-id and Password.");
+                redirect(base_url());
+            }
+            else{
+                echo "hello";
+            }
+            
         }
 
     }

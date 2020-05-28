@@ -53,30 +53,20 @@
 					<label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"></span></label>
 					<input type="checkbox" id="drop" />
 						<ul class="menu">
-
-             <li class="mr-lg-3 mr-2 active"><a href="<?php echo base_url(); ?>">Home</a></li>
-            <li class="mr-lg-3 mr-2 active"><a href="<?php echo base_url(); ?>home/about">About Us</a></li>
-            <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home/team">Team</a></li>
-            <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home/pricing">Pricing</a></li>
-            <li class="mr-lg-3 mr-2 p-0">
-  		    <label for="drop-2" class="toggle">Services <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
-  		        <a href="#">Services <span class="fa fa-angle-down" aria-hidden="true"></span></a>
-  		        <input type="checkbox" id="drop-2"/>
-  		        <ul class="inner-dropdown">
-  								<li><a href="<?php echo base_url(); ?>home/facilities?p=cardio" >Cardio </a></li>
-  								<li><a href="<?php echo base_url(); ?>home/facilities?p=group">Group Class </a></li>
-                  <li><a href="<?php echo base_url(); ?>home/facilities?p=weights">Weights</a></li>
-                  <li><a href="<?php echo base_url(); ?>home/facilities?p=tabata">Tabata</a></li>
-                  <li><a href="<?php echo base_url(); ?>home/facilities?p=boxing">Boxing</a></li>
-                  <li><a href="<?php echo base_url(); ?>home/facilities?p=yoga">Yoga</a></li>
-  		        </ul>
-            </li>
-             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home/login">Login</a></li>
-             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home_l/signup">Sign up</a></li>
-             <!-- <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home/trials">Book Trial</a></li> -->
-             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>home/contact">Contact Us</a></li>
-             <!-- <li class="mr-lg-3 mr-2"><a href="blog">Blogs</a></li> -->
+<?php   //$this->load->library('session');
+            //$user = $this->session->all_userdata();
+            if(!isset($_SESSION['view'])){?>
+             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>">Login</a></li>
+             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>login/signup">Sign up</a></li>
 						</ul>
+        <?php    }
+                else{?>
+                     <li class="mr-lg-3 mr-2 active"><a href="<?php echo base_url(); ?>">Home</a></li>
+                     <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>login/logout">Logout</a></li>
+                    
+                    
+                <?php }?>
+        
 				</nav>
 			</div>
 
