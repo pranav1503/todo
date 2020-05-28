@@ -57,7 +57,7 @@
             //$user = $this->session->all_userdata();
             if(!isset($_SESSION['view'])){?>
              <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>">Login</a></li>
-             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>login/signup">Sign up</a></li>
+             <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>signup">Sign up</a></li>
 						</ul>
         <?php    }
                 else{?>

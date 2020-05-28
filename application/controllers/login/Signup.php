@@ -2,7 +2,7 @@
     class Signup extends CI_Controller{
         
         public function index()
-        {
+        {            
             $this->load->view('login/signup');
         }
 
@@ -51,6 +51,7 @@
                     "Cookie: ci_session=t2rniginpt5po3mj7hu19q5srhaleotl"
                   ),
                 ));
+                
 
             $response = curl_exec($curl);
 

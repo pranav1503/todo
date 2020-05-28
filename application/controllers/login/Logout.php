@@ -3,7 +3,7 @@
         public function index()
         {
             $this->session->sess_destroy();
-            redirect(base_url()."login/login");
+            redirect(base_url());
         }
     }
 ?>
