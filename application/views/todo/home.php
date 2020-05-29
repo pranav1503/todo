@@ -88,6 +88,14 @@ else{
             background-color:#26262D;
         }
 
+        #ele_task:hover{
+            text-decoration: underline;
+        }
+
+        .completed{
+            text-decoration: line-through;
+        }
+
        </style>
         <!-- //Fonts -->        
     </head>
@@ -175,6 +183,7 @@ else{
                                     'label' : lab,
                                 },
                                 success: function(data){
+                                    console.log(data);
                                     data = JSON.parse(data);
                                     var new_data  = {
                                         id : data.id,
@@ -182,10 +191,12 @@ else{
                                         task: data.task,
                                         due: data.due_date,
                                         label: data.label,
+                                        completed: data.completed,
+                                        created: data.created,
                                     }                     
                                     tasks.push(new_data);  
                                     alert(data.message);
-                                    view_tasks();       
+                                    view_tasks(tasks);       
                                 },
                                 error: function(data){
                                     alert("Server Busy.")
@@ -194,6 +205,33 @@ else{
                             });
                         });
                     </script>
+                    
+
+
+                    <!-- Completed Modal -->    
+                    <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-color:#26262D">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Task</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Task Completed?</p>       
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-success" id="completed_btn">Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    <!-- // Completed Modal -->
+
+
                     <div class="col-md-7" style="background-color:#31313A;border-left:1px solid white;">
                         <div class="container" style="margin-top:50px;">
 
@@ -202,14 +240,22 @@ else{
                                     <div id="task-body">
                                     </div>
                                     <script>                                        
-                                        function view_tasks(){
+                                        function view_tasks(task_arr){
                                             let string = "";
-                                            tasks.forEach(element => {                                                
+                                            task_arr.forEach(element => {                                                
                                                 string +=
                                             `<div class ="task_complete"><div class='row' style='margin-top:15px;border-left:3px solid purple;padding-top:10px;'>                                        
-                                                    <div class='col-10' style='display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>
-                                                        <p style="color:white;text-overflow:ellipsis;">`+element.task +`</p>
-                                                    </div>           
+                                                    <div class='col-10' style='display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>`;
+                                                    if(element.completed == 1){
+                                                        string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" class="completed">`+element.task +`</p>`;
+                                                    }else{
+                                                        if(new Date(element.created).toDateString() == new Date().toDateString()){
+                                                            string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(New)</p>`;
+                                                        }else{
+                                                            string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(In Progress)</p>`;
+                                                        }
+                                                    }                                                    
+                                                    string  += `</div>           
                                                     <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                                                         <button id="del" style="" onclick="delete_task(`+element.userid+`,`+element.id+`)"><i class="fa fa-times"></i></button>
                                                     </div>                                        
@@ -230,7 +276,7 @@ else{
                                             $("#task-body").html(string);
                                         }
 
-                                        view_tasks();
+                                        view_tasks(tasks);
 
                                         function delete_task(userid,id){
                                             // alert(userid+" and " +id);
@@ -250,7 +296,7 @@ else{
                                                             for(var i=0;i<tasks.length;i++){
                                                                 if(tasks[i].id == id){
                                                                     tasks.splice(i,1);
-                                                                    view_tasks();
+                                                                    view_tasks(tasks);
                                                                     break;
                                                                 }
                                                             }
@@ -261,6 +307,38 @@ else{
                                                     }
                                                 })
                                             }
+                                        }
+
+                                        function complete_task(user,id){                                            
+                                            $("#completedModal").modal("toggle");
+                                            $("#completed_btn").click(function(){
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "<?php echo base_url();?>todo/Completed",
+                                                    data: {
+                                                        "id" : id,
+                                                        "userid" : user,
+                                                    },
+                                                    success: function(data){
+                                                        data = JSON.parse(data);
+                                                        if(data.status == true){
+                                                            for(var i=0;i<tasks.length;i++){
+                                                                if(tasks[i].id == id){
+                                                                    tasks[i].completed = 1;
+                                                                }
+                                                            }
+                                                            view_tasks(tasks);
+                                                        }else{
+                                                            alert("Server Error")
+                                                        }
+                                                        $("#completedModal").modal("toggle");
+                                                    },
+                                                    error: function(data){                                                        
+                                                        console.log(data);
+                                                        alert("Server Error");
+                                                    }
+                                                });
+                                            });                                            
                                         }
                                     </script>                                                                                 
                                 </div>
@@ -330,8 +408,8 @@ else{
                                             if(tasks[i].id == id){
                                                 tasks[i].task = $("#task").val();
                                                 tasks[i].due = due;
-                                                view_tasks();
-                                                $('.modal').modal('toggle');
+                                                view_tasks(tasks);
+                                                $('#exampleModal').modal('toggle');
                                                 break;
                                             }
                                         }
@@ -342,7 +420,7 @@ else{
                                 }
                             });
                         });
-                        $('.modal').modal('toggle');
+                        $('#exampleModal').modal('toggle');
                     }                
 
                     

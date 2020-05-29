@@ -28,7 +28,8 @@ class Todo extends REST_Controller{
         $user = $this->input->post('user');
         $date = $this->input->post('due');
         $task = $this->input->post('task'); 
-        $label = $this->input->post('label');        
+        $label = $this->input->post('label');   
+        $created = date("Y-m-d");
         if($date == "" || ctype_space($date)){
             $date = null;
         }
@@ -39,7 +40,7 @@ class Todo extends REST_Controller{
                 'message' => 'Enter Appropriate Task',
             ],REST_Controller::HTTP_BAD_REQUEST);     
         }else{
-            $id = $this->todo_model->add_todo($user,$date,$task,$label);   
+            $id = $this->todo_model->add_todo($user,$date,$task,$label,$created);   
             $this->response([   
                 'status' => true,      
                 'id' => intval($id),   
@@ -47,6 +48,8 @@ class Todo extends REST_Controller{
                 'due_date' => $date, 
                 'task' => $task,
                 'label' => $label,
+                'created' => $created,
+                'completed' => 0,
                 'message' => 'Successfully Added.',
             ],REST_Controller::HTTP_OK);     
         }
@@ -101,6 +104,21 @@ class Todo extends REST_Controller{
             ),REST_Controller::HTTP_OK);
         }
     }
+
+    public function completed_put()
+    {
+        $id = $this->put('id');
+        $data = array(                        
+            "userid" => $this->put('userid'),
+            "completed" => 1,           
+        );        
+        $result = $this->todo_model->update_todo($id,$data);
+        $this->response(array(
+            'status' => $result,
+            'id' => $id,            
+        ),REST_Controller::HTTP_OK);
+    }
+
 }
 
 ?>
