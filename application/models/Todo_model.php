@@ -11,19 +11,21 @@
             return $query->result_array();
         }
         
-        public function add_todo($user,$date,$task,$label)
+        public function add_todo($user,$date,$task,$label,$created)
         {
             $insert = $this->db->insert('todo',[
                 'userid' => $user,
                 'due' => $date,
                 'task' => $task,
                 'label' => $label,
+                'created' => $created,
             ]);
             $query = $this->db->order_by('id')->get_where('todo',array(
                 'userid' => $user,
                 'due' => $date,
                 'task' => $task,
                 'label' => $label,
+                'created' => $created,
             ));    
             foreach($query->result_array() as $key=>$value){
                 $id = $value["id"];

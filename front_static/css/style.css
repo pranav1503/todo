@@ -1260,13 +1260,13 @@ subscribe form {
 /* footer */
 
 .footer-content {
-    background: url(../images/footer_img.jpg) center no-repeat;/*../images/banner2.jpg*/
+    /* background: url(../images/footer_img.jpg) center no-repeat; */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
     background-size: cover;
-    min-height: 28em;
+    /* min-height: 28em; */
 }
 
 hr {
