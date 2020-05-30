@@ -329,6 +329,7 @@ else{
                                                             }
                                                             view_tasks(tasks);
                                                         }else{
+                                                            alert(data.status);
                                                             alert("Server Error")
                                                         }
                                                         $("#completedModal").modal("toggle");

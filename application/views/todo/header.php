@@ -2,14 +2,13 @@
 <html lang="zxx">
 
 <head>
-    <title>Leon Maestro De Fitness</title>
+    <title>To-Do</title>
     <link rel = "icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png">
     <!-- For apple devices -->
     <link rel = "apple-touch-icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png"/>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
-    <meta name="keywords" content="Leon Maestro De Fitness, leonmaestrodefitness, lmdf, gym, fitness, best gyms, lmf, clean gyms, gyms around me, boxing, tabata, yoga" />
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -41,27 +40,27 @@
 	<div class="container">
 		<div class="header d-lg-flex justify-content-between align-items-center">
 			<div class="header-agile">
-				<h1>
+				<h2>
 					<a class="navbar-brand logo" href="<?php echo base_url(); ?>" style="color:#ff3a3a;">
-                    <h1><span style="color:red;">To</span><span style="color:white;">-</span><span style="color:yellow;">Do</span></h1>
-					 <!-- <img src="<?php echo base_url(); ?>front_static/images/logo.png" alt="" style="height:50px;"><img src="<?php echo base_url(); ?>front_static/images/logo1.png" alt="" style="width:170px;"> -->
+                       <h1><img src="<?php echo base_url(); ?>front_static/images/logo.png" alt="" style="height:50px;"><span style="color:red;">To</span><span style="color:white;">-</span><span style="color:yellow;">Do</span></h1>
+					 
 					</a>
-				</h1>
+				</h2>
 			</div>
 			<div class="nav_w3ls">
 				<nav>
 					<label for="drop" class="toggle mt-lg-0 mt-1"><span class="fa fa-bars" aria-hidden="true"></span></label>
 					<input type="checkbox" id="drop" />
 						<ul class="menu">
-<?php   //$this->load->library('session');
-            //$user = $this->session->all_userdata();
+<?php  
             if(!isset($_SESSION['view'])){?>
              <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>">Login</a></li>
              <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>signup">Sign up</a></li>
 						</ul>
         <?php    }
                 else{?>
-                     <li class="mr-lg-3 mr-2 active"><a href="<?php echo base_url(); ?>">Home</a></li>
+                     
+                     <li class="mr-lg-3 mr-2 active"><a href="<?php echo base_url(); ?>">Welcome,<?php echo " ".$user['name'];?></a></li>
                      <li class="mr-lg-3 mr-2"><a href="<?php echo base_url(); ?>login/logout">Logout</a></li>
                     
                     

@@ -48,6 +48,7 @@
                 $this->load->library('session');
                 $session_data = array(
                     "id" => $response['id'],
+                    "name" => $response['name'],
                 );
                 $this->session->set_userdata($session_data);
                 redirect(base_url()."todo/home");    
