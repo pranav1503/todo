@@ -233,8 +233,36 @@ else{
 
 
                     <div class="col-md-7" style="background-color:#31313A;border-left:1px solid white;">
-                        <div class="container" style="margin-top:50px;">
-
+                        <div class="container" style="margin-top:20px;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="add_task">Search</label>                                    
+                                            <input class="form-control" type="text" name="task" id="seach_text" onkeyup="searchFun()" placeholder="Search Here">
+                                            <i style="float:right;margin-top:-35px;margin-right:10px;" class="fa fa-search"></i>
+                                        </div>
+                                </div>
+                                <script>
+                                    function searchFun(){                                        
+                                        let search_key = $("#seach_text").val().toLowerCase();
+                                        let search_arr = [];
+                                        for(var i=0;i<tasks.length;i++){
+                                            var task_text = tasks[i].task.toLowerCase();
+                                            var label_text = tasks[i].label.toLowerCase();
+                                            var due_text = "";
+                                            if(tasks[i].due == null){
+                                                due_text = "no due specified";
+                                            }else{
+                                                due_text = tasks[i].due.toLowerCase()
+                                            }
+                                            if(task_text.indexOf(search_key) > -1 || label_text.indexOf(search_key) > -1 || due_text.indexOf(search_key) > -1){
+                                                search_arr.push(tasks[i]);
+                                            }
+                                        }
+                                        view_tasks(search_arr);
+                                    }
+                                </script>
+                            </div>
                             <div class="row task-view">
                                 <div class="col-lg-12" style="margin-top:5px;height:500px;overflow-y:scroll;border-top:1px solid grey;">                                                                           
                                     <div id="task-body">
@@ -242,37 +270,42 @@ else{
                                     <script>                                        
                                         function view_tasks(task_arr){
                                             let string = "";
-                                            task_arr.forEach(element => {                                                
+                                            if(task_arr.length>0){
+                                                task_arr.forEach(element => {                                                
                                                 string +=
-                                            `<div class ="task_complete"><div class='row' style='margin-top:15px;border-left:3px solid purple;padding-top:10px;'>                                        
-                                                    <div class='col-10' style='display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>`;
-                                                    if(element.completed == 1){
-                                                        string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" class="completed">`+element.task +`</p>`;
-                                                    }else{
-                                                        if(new Date(element.created).toDateString() == new Date().toDateString()){
-                                                            string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(New)</p>`;
+                                                `<div class ="task_complete"><div class='row' style='margin-top:15px;border-left:3px solid purple;padding-top:10px;'>                                        
+                                                        <div class='col-10' style='display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>`;
+                                                        if(element.completed == 1){
+                                                            string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" class="completed">`+element.task +`</p>`;
                                                         }else{
-                                                            string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(In Progress)</p>`;
-                                                        }
-                                                    }                                                    
-                                                    string  += `</div>           
-                                                    <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                                                        <button id="del" style="" onclick="delete_task(`+element.userid+`,`+element.id+`)"><i class="fa fa-times"></i></button>
-                                                    </div>                                        
-                                            </div>
-                                            <div class="row" style="margin-top:0;border-left:3px solid purple;padding-bottom:10px;">                                        
-                                                    <div class="col-10" style="display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">`;                                                
-                                                    if(element.due == null){
-                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">No Due Specified (`+element.label.toUpperCase()+`)</p>`;
-                                                    }else{
-                                                        string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">Due On: `+element.due+` (`+element.label.toUpperCase()+`)</p>`;
-                                                    }                                                    
-                                                string +=   `</div>           
-                                                    <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                                                        <button id="del" style="" onclick="edit_fun(`+element.userid+`,`+element.id+`,'`+element.task+`','`+element.due+`')"><i class="fa fa-edit"></i></button>
-                                                    </div>                                        
-                                            </div></div> `;
-                                            });
+                                                            if(new Date(element.created).toDateString() == new Date().toDateString()){
+                                                                string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(New)</p>`;
+                                                            }else{
+                                                                string+= `<p style="color:white;text-overflow:ellipsis;" id="ele_task" onclick="complete_task(`+element.userid+`,`+element.id+`)">`+element.task +`(In Progress)</p>`;
+                                                            }
+                                                        }                                                    
+                                                        string  += `</div>           
+                                                        <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                                            <button id="del" style="" onclick="delete_task(`+element.userid+`,`+element.id+`)"><i class="fa fa-times"></i></button>
+                                                        </div>                                        
+                                                </div>
+                                                <div class="row" style="margin-top:0;border-left:3px solid purple;padding-bottom:10px;">                                        
+                                                        <div class="col-10" style="display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">`;                                                
+                                                        if(element.due == null){
+                                                            string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">No Due Specified (`+element.label.toUpperCase()+`)</p>`;
+                                                        }else{
+                                                            string += `<p style="color:rgba(255,255,255,0.5);text-overflow:ellipsis;font-size:12px;">Due On: `+element.due+` (`+element.label.toUpperCase()+`)</p>`;
+                                                        }                                                    
+                                                    string +=   `</div>           
+                                                        <div class="col-2" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                                            <button id="del" style="" onclick="edit_fun(`+element.userid+`,`+element.id+`,'`+element.task+`','`+element.due+`')"><i class="fa fa-edit"></i></button>
+                                                        </div>                                        
+                                                </div></div> `;
+                                                });
+                                                
+                                            }else{
+                                                string = `<center><p>No Tasks Found.</p></center>`;
+                                            }
                                             $("#task-body").html(string);
                                         }
 
