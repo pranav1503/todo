@@ -41,7 +41,7 @@
         <footer>
             <div class="footer" style="background-color:black;">
                 <div class="container-fluid">
-                    <center><p style="color:white;">Developed By Team DP Tech.</p>                </center>
+                    <center><p style="color:white;"><img src="<?php echo base_url(); ?>front_static/images/logo2.png" alt="" style="height:100px;"><br>Developed By Team DP Tech.</p></center>
                 </div>
                 <!-- //footer bottom -->
             </div>

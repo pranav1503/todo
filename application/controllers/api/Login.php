@@ -9,6 +9,7 @@ class Login extends REST_Controller{
         parent::__construct();
 
         $this->load->model('signups');
+        $this->load->library('encrypt');
        // $this->load->library('session');
     }
 
@@ -22,10 +23,15 @@ class Login extends REST_Controller{
             foreach ($query->result() as $row)
                 continue;
             $id = $row->id;
+            $name = $row->first_name;
             $email_id = $row->email_id;
+            $pass = $row->password;
             $phone_no = $row->phone_no;
-            $session_data = array(
+            $pass = $this->encrypt->decode($pass);
+            if($password==$pass){
+                $session_data = array(
                 'id' => $id,
+                'name' => $name,
                 'email_id' => $email_id,
                 'phone_no' => $phone_no,
             );
@@ -33,8 +39,18 @@ class Login extends REST_Controller{
             $this->response([
                 'status' => true,
                 'id' => $id,
+                'name' => $name,
            'message' => 'Logged In Successfully.',
-        ],REST_Controller::HTTP_OK);
+            ],REST_Controller::HTTP_OK);
+            
+            }
+            else{
+                $this->response([
+                'status' => false,
+           'message' => 'Failed.',
+        ],REST_Controller::HTTP_OK); 
+                
+            }
             
             
                 
