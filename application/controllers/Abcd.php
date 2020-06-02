@@ -23,7 +23,7 @@
             'mode' => 'ctr',
           )
       );
-      $pass =  $this->encryption->encrypt("encrypt");
+      $pass =  $this->encryption->decrypt("");
       echo $pass;
     // }
 
