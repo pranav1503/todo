@@ -235,31 +235,81 @@ else{
                     <div class="col-md-7" style="background-color:#31313A;border-left:1px solid white;">
                         <div class="container" style="margin-top:20px;">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                         <div class="form-group">
                                             <label for="add_task">Search</label>                                    
                                             <input class="form-control" type="text" name="task" id="seach_text" onkeyup="searchFun()" placeholder="Search Here">
                                             <i style="float:right;margin-top:-35px;margin-right:10px;" class="fa fa-search"></i>
                                         </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="add_label">Status</label>                                        
+                                        <select name="" id="view_status" class="form-control" onchange="statusFun()">
+                                            <option value="all">All</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="progress">In-Progress</option>                                          
+                                        </select>
+                                    </div>
+                                </div>
                                 <script>
                                     function searchFun(){                                        
                                         let search_key = $("#seach_text").val().toLowerCase();
                                         let search_arr = [];
-                                        for(var i=0;i<tasks.length;i++){
-                                            var task_text = tasks[i].task.toLowerCase();
-                                            var label_text = tasks[i].label.toLowerCase();
-                                            var due_text = "";
-                                            if(tasks[i].due == null){
-                                                due_text = "no due specified";
-                                            }else{
-                                                due_text = tasks[i].due.toLowerCase()
+                                        var stat = $("#view_status").val();
+                                        
+                                        if(stat == "completed"){                                            
+                                            for(var i=0;i<tasks.length;i++){
+                                                var task_text = tasks[i].task.toLowerCase();
+                                                var label_text = tasks[i].label.toLowerCase();
+                                                var due_text = "";
+                                                var comp_text = tasks[i].completed;                                               
+                                                if(tasks[i].due == null){
+                                                    due_text = "no due specified";
+                                                }else{
+                                                    due_text = tasks[i].due.toLowerCase()
+                                                }                                                
+                                                if((task_text.indexOf(search_key) > -1 || label_text.indexOf(search_key) > -1 || due_text.indexOf(search_key) > -1) && comp_text == 1){
+                                                    search_arr.push(tasks[i]);
+                                                }
                                             }
-                                            if(task_text.indexOf(search_key) > -1 || label_text.indexOf(search_key) > -1 || due_text.indexOf(search_key) > -1){
-                                                search_arr.push(tasks[i]);
+                                        }else if(stat == "progress"){                                                
+                                            for(var i=0;i<tasks.length;i++){     
+                                                var task_text = tasks[i].task.toLowerCase();
+                                                var label_text = tasks[i].label.toLowerCase();
+                                                var due_text = "";
+                                                var comp_text = tasks[i].completed;                                               
+                                                if(tasks[i].due == null){
+                                                    due_text = "no due specified";
+                                                }else{
+                                                    due_text = tasks[i].due.toLowerCase()
+                                                }                                           
+                                                if((task_text.indexOf(search_key) > -1 || label_text.indexOf(search_key) > -1 || due_text.indexOf(search_key) > -1) && comp_text == 0){
+                                                    search_arr.push(tasks[i]);
+                                                }
+                                            }
+                                        }else{
+                                            for(var i=0;i<tasks.length;i++){  
+                                                var task_text = tasks[i].task.toLowerCase();
+                                                var label_text = tasks[i].label.toLowerCase();
+                                                var due_text = "";
+                                                var comp_text = tasks[i].completed;                                               
+                                                if(tasks[i].due == null){
+                                                    due_text = "no due specified";
+                                                }else{
+                                                    due_text = tasks[i].due.toLowerCase()
+                                                }                                              
+                                                if((task_text.indexOf(search_key) > -1 || label_text.indexOf(search_key) > -1 || due_text.indexOf(search_key) > -1)){
+                                                    search_arr.push(tasks[i]);
+                                                }
                                             }
                                         }
                                         view_tasks(search_arr);
+                                    }
+
+                                    function statusFun(){                                                                                
+                                        $("#seach_text").val("")
+                                        searchFun();
                                     }
                                 </script>
                             </div>
@@ -306,7 +356,7 @@ else{
                                             }else{
                                                 string = `<center><p>No Tasks Found.</p></center>`;
                                             }
-                                            $("#task-body").html(string);
+                                            $("#task-body").html(string);                                            
                                         }
 
                                         view_tasks(tasks);
@@ -444,6 +494,7 @@ else{
                                                 tasks[i].due = due;
                                                 view_tasks(tasks);
                                                 $('#exampleModal').modal('toggle');
+                                                $("#view_status").val("all");
                                                 break;
                                             }
                                         }
@@ -454,7 +505,7 @@ else{
                                 }
                             });
                         });
-                        $('#exampleModal').modal('toggle');
+                        $('#exampleModal').modal('toggle');                        
                     }                
 
                     
