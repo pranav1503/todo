@@ -10,7 +10,7 @@
         {
             
             $this->load->library('form_validation');
-            $this->load->library('encrypt');
+            
             $this->form_validation->set_rules("first_name", "First Name", "required");
             $this->form_validation->set_rules("last_name", "Last Name", "required");
             $this->form_validation->set_rules("email_id", "E-Mail", "required|is_unique[login.email_id]");
@@ -26,7 +26,14 @@
                 $email_id = $this->input->post('email_id');
                 $phone_no = $this->input->post('phone_no');
                 $password1 = $this->input->post('password');
-                $password = $this->encrypt->encode($password1);
+                $this->load->library('encryption');
+                $this->encryption->initialize(
+                    array(
+                        'cipher' => 'aes-256',
+                        'mode' => 'ctr',
+                    )
+                );
+                $password =  $this->encryption->encrypt($password1);
                 
                 $curl = curl_init();
                 $data = array('first_name' => $first_name,'last_name' => $last_name,'email_id' => $email_id,'phone_no' => $phone_no,'password' => $password);
@@ -65,7 +72,7 @@
 //                "id" => $response['id'],
 //            );
 //            $this->session->set_userdata($session_data);
-            redirect(base_url()."todo/home");
+            redirect(base_url());
             //echo $response;
             }
             else
