@@ -17,7 +17,7 @@ class Login extends REST_Controller{
     {
         $email_id = $this->input->post('email_id');
         $password = $this->input->post('password');
-        $query = $this->signups->login_check($email_id,$password); 
+        $query = $this->signups->login_check($email_id); 
         if($query->num_rows()>0){
             foreach ($query->result() as $row)
                 continue;

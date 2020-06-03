@@ -4,35 +4,16 @@ $user = $this->session->all_userdata();
 if($user['id']!=""){
     redirect(base_url()."todo/home");
 }
-
-
-//$user = $this->session->all_userdata();
-//echo "hello worlds ".$user['id'];
-
-
 ?>-->
-<?php
-    // if ($this->session->userdata("userid") != "") {
-    //   redirect(base_url()."dashboard");
-    // }
-    // if ($this->session->flashdata("signup")) {
-    //   echo "<script>alert('Registered Successfully. Please login to Continue');</script>";
-    // }
-    // if ($this->session->flashdata("password")) {
-    //   echo "<script>alert('Password Changed Successfully. Please login to Continue');</script>";
-    // }
- ?>
 <!DOCTYPE html>
 <html lang="zxx">
     <head>
-        <title>Leon Maestro De Fitness</title>
+        <title>To-Do</title>
         <link rel = "icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png">
         <!-- For apple devices -->
         <link rel = "apple-touch-icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png"/>
-        <!-- Meta tag Keywords -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8" />
-        <meta name="keywords" content="Leon Maestro De Fitness, leonmaestrodefitness, lmdf, gym, fitness, best gyms, lmf, clean gyms, gyms around me, boxing, tabata, yoga" />
         <script>
             addEventListener("load", function () {
                 setTimeout(hideURLbar, 0);
@@ -42,8 +23,6 @@ if($user['id']!=""){
                 window.scrollTo(0, 1);
             }
         </script> 
-              
-        <!-- //Meta tag Keywords -->
         <!-- Custom-Files -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>front_static/css/bootstrap.css">
         <!-- Bootstrap-Core-CSS -->
