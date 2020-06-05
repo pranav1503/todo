@@ -21,14 +21,12 @@ else{
 <!DOCTYPE html>
 <html lang="zxx">
     <head>
-        <title>Leon Maestro De Fitness</title>
+       <title>To-Do</title>
         <link rel = "icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png">
         <!-- For apple devices -->
         <link rel = "apple-touch-icon" type = "image/png" href = "<?php echo base_url(); ?>front_static/images/logo.png"/>
-        <!-- Meta tag Keywords -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8" />
-        <meta name="keywords" content="Leon Maestro De Fitness, leonmaestrodefitness, lmdf, gym, fitness, best gyms, lmf, clean gyms, gyms around me, boxing, tabata, yoga" />
         <script>
             addEventListener("load", function () {
                 setTimeout(hideURLbar, 0);
@@ -38,7 +36,6 @@ else{
                 window.scrollTo(0, 1);
             }
         </script>        
-        <!-- //Meta tag Keywords -->
         <!-- Custom-Files -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>front_static/css/bootstrap.css">
         <!-- Bootstrap-Core-CSS -->
