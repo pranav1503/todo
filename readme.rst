@@ -5,8 +5,8 @@ Instructions
 ************
 Requirements
 ************
-XAMPP Server
-Windows OS
+* XAMPP Server
+* Windows OS
 
 **********************
 Installation of Xampp
