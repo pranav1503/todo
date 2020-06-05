@@ -25,8 +25,8 @@ present inside the folder where xampp was installed.
 ***********************
 Setting up the files
 ***********************
-
-1. Go to application/config folder of the project.
+| After the files are cloned, follow the steps:
+| 1. Go to application/config folder of the project.
 #. Open the config.php file. Change the base_url to the url(localhost url) to which the folder is linked to.
 #. Open the database.php, change the database name, username and password to installed phpmyadmin credentials.
 #. Go to localhost/phpmyadmin in a browser, login and create a database called as todo.
